@@ -18,13 +18,13 @@
 
 ### 2. ユーザーにブラウザで「連携アプリを認証」ボタンを押下し、その後表示されるPINを入力してもらう。
   ```
-  https://api.twitter.com/oauth/authorize?oauth_token={リクエストトークン}
+  GET https://api.twitter.com/oauth/authorize?oauth_token={リクエストトークン}
   ```
   - https://developer.twitter.com/ja/docs/authentication/api-reference/authorize
 
 ### 3. ユーザーのアクセストークンを取得。
   ```
-  https://api.twitter.com/oauth/access_token?oauth_verifier=${PIN}&oauth_token=${リクエストトークン}
+  POST https://api.twitter.com/oauth/access_token?oauth_verifier=${PIN}&oauth_token=${リクエストトークン}
   ```
   - https://developer.twitter.com/ja/docs/authentication/api-reference/access_token
 
