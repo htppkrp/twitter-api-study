@@ -18,10 +18,10 @@ readonly OUTPUT_DIR=${BAT_HOME}/tokens
 mkdir -p ${OUTPUT_DIR}
 # 認証情報
 declare -A auth=(
-  ["oauth_token"]=""
-  ["oauth_token_secret"]=""
-  ["user_id"]=""
-  ["screen_name"]=""
+  ['oauth_token']=""
+  ['oauth_token_secret']=""
+  ['user_id']=""
+  ['screen_name']=""
 )
 
 #--------------------------------------------------------------------------------
@@ -61,10 +61,10 @@ constructAuth() {
 saveAccessToken() {
   [ $# -eq 1 ] || exit 1
 
-  echo "oauth_token=${auth["oauth_token"]}" > $1
-  echo "oauth_token_secret=${auth["oauth_token_secret"]}" >> $1
-  echo "user_id=${auth["user_id"]}" >> $1
-  echo "screen_name=${auth["screen_name"]}" >> $1
+  echo "oauth_token=${auth['oauth_token']}" > $1
+  echo "oauth_token_secret=${auth['oauth_token_secret']}" >> $1
+  echo "user_id=${auth['user_id']}" >> $1
+  echo "screen_name=${auth['screen_name']}" >> $1
 }
 
 #--------------------------------------------------------------------------------
@@ -94,17 +94,17 @@ constructAuth $(curl -fsSw'\n' -X POST -H "Authorization: Bearer ${BEARER_TOKEN}
 pin=""
 while [ -z "$pin" ]; do
   echo "以下のURLをブラウザで開き、「連携アプリを認証」ボタンを押下し、表示されるPINコードを入力してください。"
-  echo "  https://api.twitter.com/oauth/authorize?oauth_token=${auth["oauth_token"]}"
+  echo "  https://api.twitter.com/oauth/authorize?oauth_token=${auth['oauth_token']}"
   echo -n "PINコード> "
   read pin
 done
 
 # リクエストトークンをユーザーアクセストークンに変換
 constructAuth $(curl -fsSw'\n' -X POST \
-"https://api.twitter.com/oauth/access_token?oauth_verifier=${pin}&oauth_token=${auth["oauth_token"]}")
+"https://api.twitter.com/oauth/access_token?oauth_verifier=${pin}&oauth_token=${auth['oauth_token']}")
 
 # アクセストークン保存
-output=${OUTPUT_DIR}/${auth[screen_name""]}.txt
+output=${OUTPUT_DIR}/${auth['screen_name']}.txt
 log "INFO" "アクセストークンを保存します。(保存先: ${output})"
 saveAccessToken ${output}
 
