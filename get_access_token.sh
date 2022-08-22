@@ -16,7 +16,7 @@ source ${BAT_HOME}/secret.txt
 # アクセストークン出力先ディレクトリ
 readonly OUTPUT_DIR=${BAT_HOME}/tokens
 mkdir -p ${OUTPUT_DIR}
-
+# 認証情報
 declare -A auth=(
   ["oauth_token"]=""
   ["oauth_token_secret"]=""
