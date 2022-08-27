@@ -79,7 +79,8 @@
 1. BASE64でエンコードする。
 
 ### 6. ツイート
-1. パラメーターと署名をリクエストヘッダーに混ぜて「https://api.twitter.com/1.1/statuses/update.json」へPOSTリクエスト送信。  
+1. パラメーターと署名をリクエストヘッダーに混ぜてPOSTリクエスト送信。  
+- https://api.twitter.com/1.1/statuses/update.json
 
 ## 参考
 - https://developer.twitter.com/ja/docs/authentication/oauth-1-0a/creating-a-signature
