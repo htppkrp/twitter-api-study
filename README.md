@@ -75,8 +75,8 @@
 1. 「{APIキーのシークレット}&{アクセストークンシークレット}」のような感じでつなげる。
 
 ### 5. 署名の計算
-1. 署名ベース文字列を署名キーでHMAC-SHA1でハッシュ化する。
-1. ハッシュ化したらbase64に変換する。
+1. 上記の署名ベース文字列を署名キーでハッシュ化する。(アルゴリズム: HMAC-SHA1)
+1. BASE64でエンコードする。
 
 ## 参考
 - https://developer.twitter.com/ja/docs/authentication/oauth-1-0a/creating-a-signature
