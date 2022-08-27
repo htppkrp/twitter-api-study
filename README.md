@@ -78,7 +78,9 @@
 1. 上記の署名ベース文字列を署名キーでハッシュ化する。(アルゴリズム: HMAC-SHA1)
 1. BASE64でエンコードする。
 
+### 6. ツイート
+1. 署名をリクエストヘッダーに混ぜてツイートする。  
+
 ## 参考
 - https://developer.twitter.com/ja/docs/authentication/oauth-1-0a/creating-a-signature
 - https://developer.twitter.com/en/docs/twitter-api/v1/tweets/post-and-engage/api-reference/post-statuses-update
-
