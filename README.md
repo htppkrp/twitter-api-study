@@ -33,3 +33,52 @@
 
 ## 参考
 - https://developer.twitter.com/ja/docs/authentication/oauth-1-0a/obtaining-user-access-tokens
+
+# ツイートする
+## 概要
+- とてもめんどい。
+- 動いたっぽいけどなんかよくわからない。
+- 3日くらいたったら内容もう忘れてそう。
+
+## 流れ
+### 1. HTTPリクエストメソッドとURL
+1. HTTPリクエストメソッドを調べる。
+    - post
+1. リソースURLを調べる。
+    - https://api.twitter.com/1.1/statuses/update.json
+
+### 2. パラメーターの収集
+1. ツイートに必要なパラメーターを集める。
+    |No|キー|説明|
+    |:--|:--|:--|
+    | 1 | status | ツイートする内容 |
+    | 2 | oauth_consumer_key | アプリのキー |
+    | 3 | oauth_nonce | リクエストごとにアプリで生成する一意のトークン |
+    | 4 | oauth_signature_method | HMAC-SHA1固定 |
+    | 5 | oauth_timestamp | UNIXエポック |
+    | 6 | oauth_token | ツイートするユーザーのアクセストークン |
+    | 7 | oauth_version | 1.0固定 |
+
+1. キー、値をパーセントエンコードする。
+1. キーでアルファベット順にソートする。
+1. 「{キー}={値}&{キー}={値}&{キー}={値}...」のような感じでつなげる。
+
+### 3. 署名ベース文字列の作成
+1. 上記で調べたものを加工する。
+    - HTTPリクエストメソッド --> 大文字にする。
+    - リソースURL --> パーセントエンコードする。
+    - パラメーター --> パーセントエンコードする。
+1. 「{HTTPリクエストメソッド}&{リソースURL}&{パラメーター}」のような感じでつなげる。
+
+### 4. 署名キーの取得
+1. APIキーのシークレットとアクセストークンシークレットをパーセントエンコードする。
+1. 「{APIキーのシークレットと}&アクセストークンシークレット}」のような感じでつなげる。
+
+### 5. 署名の計算
+1. 署名ベース文字列を署名キーでHMAC-SHA1でハッシュ化する。
+1. ハッシュ化したらbase64に変換する。
+
+## 参考
+- https://developer.twitter.com/ja/docs/authentication/oauth-1-0a/creating-a-signature
+- https://developer.twitter.com/en/docs/twitter-api/v1/tweets/post-and-engage/api-reference/post-statuses-update
+

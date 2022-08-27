@@ -14,8 +14,8 @@ source $(cd $(dirname $0); pwd)/common.sh
 # シークレットファイル
 source ${BAT_HOME}/secret.txt
 # アクセストークン出力先ディレクトリ
-readonly OUTPUT_DIR=${BAT_HOME}/tokens
-mkdir -p ${OUTPUT_DIR}
+readonly USER_INFO_DIR=${BAT_HOME}/tokens
+mkdir -p ${USER_INFO_DIR}
 # 認証情報
 declare -A auth=(
   ['oauth_token']=""
@@ -37,7 +37,7 @@ declare -A auth=(
 # 返却
 #   なし。
 #--------------------------------------------------------------------------------
-constructAuth() {
+construct_auth() {
   [ $# -eq 1 ] || exit 1
 
   response_parts=(${1//&/ })
@@ -58,7 +58,7 @@ constructAuth() {
 # 返却
 #   なし。
 #--------------------------------------------------------------------------------
-saveAccessToken() {
+save_access_token() {
   [ $# -eq 1 ] || exit 1
 
   echo "oauth_token=${auth['oauth_token']}" > $1
@@ -87,7 +87,7 @@ if !(type "curl" > /dev/null 2>&1); then
 fi
 
 # リクエストトークンの取得
-constructAuth $(curl -fsSw'\n' -X POST -H "Authorization: Bearer ${BEARER_TOKEN}" \
+construct_auth $(curl -fsSw'\n' -X POST -H "Authorization: Bearer ${BEARER_TOKEN}" \
 "https://api.twitter.com/oauth/request_token?oauth_consumer_key=${API_KEY}&oauth_callback=oob")
 
 # PIN入力要求
@@ -100,13 +100,13 @@ while [ -z "$pin" ]; do
 done
 
 # リクエストトークンをユーザーアクセストークンに変換
-constructAuth $(curl -fsSw'\n' -X POST \
+construct_auth $(curl -fsSw'\n' -X POST \
 "https://api.twitter.com/oauth/access_token?oauth_verifier=${pin}&oauth_token=${auth['oauth_token']}")
 
 # アクセストークン保存
-output=${OUTPUT_DIR}/${auth['screen_name']}.txt
+output=${USER_INFO_DIR}/${auth['screen_name']}.txt
 log "INFO" "アクセストークンを保存します。(保存先: ${output})"
-saveAccessToken ${output}
+save_access_token ${output}
 
 # 処理終了
 log "INFO" "処理を終了します。"
